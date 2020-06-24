@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Image = require('../models/Image');
+const request = require('request');
 const { check, validationResult } = require('express-validator');
 // @route    POST api/add_image
 // @desc     Add an image
@@ -23,6 +24,18 @@ router.post(
         name: req.body.name,
         url: req.body.url,
       });
+
+      request(
+        {
+          url: newImage.url,
+          method: 'HEAD',
+        },
+        function (err, response, body) {
+          var headers = response.headers;
+          newImage.metaData.size = headers['content-length'];
+          newImage.metaData.extType = headers['content-type'].split('/').pop();
+        }
+      );
 
       const image = await newImage.save();
       res.json(image);

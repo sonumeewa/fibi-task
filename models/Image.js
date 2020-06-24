@@ -12,7 +12,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
   },
   metaData: {
-    Size: {
+    size: {
       type: Number,
     },
     extType: {
