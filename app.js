@@ -10,9 +10,7 @@ connectDB();
 app.use(express.json({ extended: false }));
 
 //Define routes
-app.use('/', function (req, res) {
-  response.send('Hello from fibi task app');
-});
+app.use('/', require('./routes/base'));
 app.use('/api', require('./routes/image'));
 
 const PORT = process.env.PORT || 5000;
